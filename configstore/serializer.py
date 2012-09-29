@@ -10,6 +10,8 @@ from django.utils import simplejson
 
 from decimal import Decimal
 
+from fields import FieldFile
+
 class Handler(object):
     def encode(self, obj):
         '''
@@ -58,6 +60,20 @@ class DecimalHandler(Handler):
     
     def decode(self, dct):
         return Decimal(dct['value'])
+    
+class FileHandler(Handler):
+    key = 'File'
+    instancetype = FieldFile
+    
+    def encode(self, obj):
+        # `obj` is expected to be some type of `FieldFile`:
+        import pdb; pdb.set_trace()
+        return {'__type__': self.key,
+                'name': obj.name}
+    
+    def decode(self, dct):
+        import pdb; pdb.set_trace()
+        return FieldFile(dct['name'])
 
 class JSONDecoder(simplejson.JSONDecoder):
     def __init__(self, *args, **kwargs):
@@ -85,7 +101,7 @@ class JSONEncoder(DjangoJSONEncoder):
         return super(JSONEncoder, self).default(obj)
 
 def make_serializers():
-    handlers = [ModelHandler(), DecimalHandler()]
+    handlers = [ModelHandler(), DecimalHandler(), FileHandler()]
     #CONSIDER it might be a good idea to allow registering more serializers
     return JSONEncoder(handlers=handlers), JSONDecoder(handlers=handlers)
 

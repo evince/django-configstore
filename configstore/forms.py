@@ -1,9 +1,11 @@
 from django import forms
+from django.core.files.base import File
 from django.utils import simplejson
 from django.contrib.sites.models import Site
 from django.core.serializers.json import DjangoJSONEncoder
 
-from models import Configuration
+from fields import FieldFile
+from models import Configuration 
 
 class ConfigurationForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
@@ -17,8 +19,20 @@ class ConfigurationForm(forms.ModelForm):
                 if hasattr(value, 'pk'):
                     initial[key] = value.pk
             self.initial.update(initial)
+            
+    def clean(self):
+        import pdb; pdb.set_trace()
+        if self.is_multipart:
+            # Save data for any File- or ImageFields:
+            for fld, value in self.cleaned_data.items():
+                if isinstance(value, File):
+                    f = FieldFile(value.name)
+                    f.save(value.name, value)
+                    self.cleaned_data[fld] = f
+        return self.cleaned_data
 
     def save(self, commit=True):
+        import pdb; pdb.set_trace()
         instance = super(ConfigurationForm, self).save(False)
         data = dict(self.cleaned_data)
         del data['site']
