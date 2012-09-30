@@ -21,7 +21,6 @@ class ConfigurationForm(forms.ModelForm):
             self.initial.update(initial)
             
     def clean(self):
-        import pdb; pdb.set_trace()
         if self.is_multipart:
             # Save data for any File- or ImageFields:
             for fld, value in self.cleaned_data.items():
@@ -32,7 +31,6 @@ class ConfigurationForm(forms.ModelForm):
         return self.cleaned_data
 
     def save(self, commit=True):
-        import pdb; pdb.set_trace()
         instance = super(ConfigurationForm, self).save(False)
         data = dict(self.cleaned_data)
         del data['site']

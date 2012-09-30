@@ -67,12 +67,10 @@ class FileHandler(Handler):
     
     def encode(self, obj):
         # `obj` is expected to be some type of `FieldFile`:
-        import pdb; pdb.set_trace()
         return {'__type__': self.key,
                 'name': obj.name}
     
     def decode(self, dct):
-        import pdb; pdb.set_trace()
         return FieldFile(dct['name'])
 
 class JSONDecoder(simplejson.JSONDecoder):
