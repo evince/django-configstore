@@ -1,13 +1,14 @@
+from filecmp import cmp
+
 from django.contrib import admin
 from django.shortcuts import render_to_response
 from django.contrib.contenttypes.models import ContentType
-from django.utils.encoding import force_unicode
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
 from django import template
 
-from models import Configuration
-from configs import CONFIGS
+from .models import Configuration
+from .configs import CONFIGS
 
 class ConfigurationAdmin(admin.ModelAdmin):
     list_display = ('name', 'key', 'site')
@@ -38,7 +39,7 @@ class ConfigurationAdmin(admin.ModelAdmin):
             return cmp(a[1].name, b[1].name)
         configs.sort(sort_by_label)
         context = {
-            'title': _('Select %s') % force_unicode(opts.verbose_name),
+            'title': _('Select %s') % opts.verbose_name,
             'configs': configs,
             #'adminform': adminForm,
             'is_popup': request.REQUEST.has_key('_popup'),
@@ -66,6 +67,6 @@ class ConfigurationAdmin(admin.ModelAdmin):
         return render_to_response(self.change_form_template or [
             "admin/%s/%s/add_form.html" % (app_label, opts.object_name.lower()),
             "admin/%s/add_form.html" % app_label,
-        ], context, context_instance=template.RequestContext(request))
+        ], context)
 
 admin.site.register(Configuration, ConfigurationAdmin)
