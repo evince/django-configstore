@@ -3,7 +3,6 @@ from django.core.files.base import File
 from django.core.files.storage import default_storage
 from django.db.models.fields.files import FieldFile as _FieldFile
 from django.utils.encoding import smart_str
-from django.utils.translation import force_unicode
 import datetime
 import os
 
@@ -23,7 +22,7 @@ class FieldFile(_FieldFile):
             raise ValueError("This instance has no file associated with it.")
 
     def get_directory_name(self):
-        return os.path.normpath(force_unicode(datetime.datetime.now().strftime(smart_str(CONFIGSTORE_FILE_PATH))))
+        return os.path.normpath(datetime.datetime.now().strftime(smart_str(CONFIGSTORE_FILE_PATH)))
 
     def get_filename(self, filename):
         return os.path.normpath(self.storage.get_valid_name(os.path.basename(filename)))

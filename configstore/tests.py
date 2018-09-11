@@ -5,10 +5,10 @@ from django.contrib.sites.models import Site
 from django import forms
 from django.template import Template, Context
 
-from configs import ConfigurationInstance, register, get_config, CONFIG_CACHE
-from forms import ConfigurationForm
-from models import Configuration
-from listeners import nuke_cache
+from .configs import ConfigurationInstance, register, get_config, CONFIG_CACHE
+from .forms import ConfigurationForm
+from .models import Configuration
+from .listeners import nuke_cache
 
 from decimal import Decimal
 
