@@ -32,17 +32,17 @@ class ConfigurationAdmin(admin.ModelAdmin):
         model = self.model
         opts = model._meta
         app_label = opts.app_label
-        ordered_objects = opts.get_ordered_objects()
+        #ordered_objects = opts.get_ordered_objects()
         obj = None
         configs = CONFIGS.items()
         def sort_by_label(a, b):
             return cmp(a[1].name, b[1].name)
-        configs.sort(sort_by_label)
+        #configs.sort(sort_by_label)
         context = {
             'title': _('Select %s') % opts.verbose_name,
             'configs': configs,
             #'adminform': adminForm,
-            'is_popup': request.REQUEST.has_key('_popup'),
+            #'is_popup': request.REQUEST.has_key('_popup'),
             'show_delete': False,
             #'media': mark_safe(media),
             #'inline_admin_formsets': inline_admin_formsets,
@@ -56,7 +56,7 @@ class ConfigurationAdmin(admin.ModelAdmin):
             'has_delete_permission': self.has_delete_permission(request, obj),
             'has_file_field': False, # FIXME - this should check if form or formsets have a FileField,
             'has_absolute_url': hasattr(self.model, 'get_absolute_url'),
-            'ordered_objects': ordered_objects,
+            #'ordered_objects': ordered_objects,
             'form_url': mark_safe(form_url),
             'opts': opts,
             'content_type_id': ContentType.objects.get_for_model(self.model).id,
