@@ -1,5 +1,5 @@
 from django.contrib.sites.models import Site
-from settings import SITE_ID
+#from settings import SITE_ID
 from .models import Configuration
 
 import threading
