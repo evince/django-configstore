@@ -96,7 +96,7 @@ def get_config(key):
     The lazy object will be unique to each thread so values may be changed on the fly
     The object also gets purged upon the begining of each request
     '''
-    if key not in CONFIG_CACHE:
-        CONFIG_CACHE[key] = LazyDictionary(CONFIGS[key].get_config)
+    #if key not in CONFIG_CACHE:
+    CONFIG_CACHE[key] = LazyDictionary(CONFIGS[key].get_config)
     return CONFIG_CACHE[key]
 
