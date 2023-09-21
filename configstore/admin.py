@@ -4,8 +4,7 @@ from django.contrib import admin
 from django.shortcuts import render
 from django.contrib.contenttypes.models import ContentType
 from django.utils.safestring import mark_safe
-from django.utils.translation import ugettext_lazy as _
-from django import template
+from django.utils.translation import gettext_lazy as _
 
 from .models import Configuration
 from .configs import CONFIGS
