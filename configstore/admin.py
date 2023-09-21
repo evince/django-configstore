@@ -1,7 +1,7 @@
 from filecmp import cmp
 
 from django.contrib import admin
-from django.shortcuts import render_to_response
+from django.shortcuts import render
 from django.contrib.contenttypes.models import ContentType
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
@@ -64,7 +64,7 @@ class ConfigurationAdmin(admin.ModelAdmin):
             'save_on_top': self.save_on_top,
         }
         context.update(extra_context or {})
-        return render_to_response(self.change_form_template or [
+        return render(request, self.change_form_template or [
             "admin/%s/%s/add_form.html" % (app_label, opts.object_name.lower()),
             "admin/%s/add_form.html" % app_label,
         ], context)
